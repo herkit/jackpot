@@ -7,6 +7,8 @@ var app = express();
 
 var games = {};
 
+app.set('port', (process.env.PORT || 3000))
+
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
@@ -25,4 +27,6 @@ app.get("/game/:game/state", function(req, res) {
   res.json(games[req.params.game]);
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(app.get('port'), function() {
+  console.log("Node app is running at localhost:" + app.get('port'))
+});
