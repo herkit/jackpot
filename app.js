@@ -25,4 +25,4 @@ app.get("/game/:game/state", function(req, res) {
   res.json(games[req.params.game]);
 });
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
