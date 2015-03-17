@@ -1,11 +1,19 @@
 var express = require('express.io'),
-    exphbs  = require('express-handlebars');
+    exphbs  = require('express-handlebars'),
+    Game = require('./lib/game');
 
 var app = express();
 
 //app.http.io();
 
 var games = {};
+
+var getGame = function(gameId) {
+  if (!games[gameId]) {
+    games[gameId] = new Game(gameId, { Name: "Player 1", Win: 0, Loss: 0 });
+  }
+  return games[gameId];
+}
 
 app.set('port', (process.env.PORT || 3000))
 
@@ -19,14 +27,32 @@ app.get('/', function (req, res) {
 });
 
 app.get("/game/:game", function(req, res) {
-  res.render('game');
+  res.render('game', getGame(req.params.game).state);
 });
 
 app.get("/game/:game/state", function(req, res) {
-  if (!games[req.params.game]) {
-    games[req.params.game] = { digits: ["1", "2", "3", "4", "5", "6", "7", "8", "9"] };
-  }
-  res.json(games[req.params.game]);
+  res.json(getGame(req.params.game));
+});
+
+app.get("/game/:game/roll", function(req, res) {
+  res.setHeader("Cache-Control", "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0')");
+  getGame(req.params.game).rollDice(function(err, state) {
+    if (err) {
+      res.json(err, 403);
+    } else {
+      res.json(state);
+    }
+  });
+});
+
+app.get("/game/:game/select/:number", function(req, res) {
+  getGame(req.params.game).select(parseInt(req.params.number), function(err, state) {
+    if (err) {
+      res.json(err, 403);
+    } else {
+      res.json(state);
+    }
+  });
 });
 
 app.listen(app.get('port'), function() {

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="75"
+   height="75"
+   id="svg4100"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="dice-2.svg">
+  <defs
+     id="defs4102">
+    <font
+       horiz-adv-x="1024"
+       id="font5037"
+       inkscape:label="font 1">
+      <font-face
+         units-per-em="1024"
+         id="font-face5039"
+         font-family="Jackpot Dice" />
+      <glyph
+         glyph-name="Dice 2"
+         id="glyph5049"
+         unicode="2"
+         d="m 42.643924,962.45602 c 0,-2.86519 -2.322702,-5.18789 -5.1879,-5.18789 -2.865198,0 -5.187899,2.3227 -5.187899,5.18789 0,2.8652 2.322701,5.1879 5.187899,5.1879 2.865198,0 5.1879,-2.3227 5.1879,-5.1879 z M 2.4897742,922.32864 c 0,-2.86519 -2.32270205,-5.18789 -5.1879,-5.18789 -2.865198,0 -5.187899,2.3227 -5.187899,5.18789 0,2.8652 2.322701,5.1879 5.187899,5.1879 2.86519795,0 5.1879,-2.3227 5.1879,-5.1879 z m -13.4920412,53.5475 c -2.805788,0 -5.099524,-2.29374 -5.099524,-5.09952 l 0,-56.73564 c 0,-2.8058 2.293736,-5.09957 5.099524,-5.09957 l 56.735682,0 c 2.805788,0 5.099524,2.29377 5.099524,5.09957 l 0,56.73564 c 0,2.80578 -2.293736,5.09952 -5.099524,5.09952 l -56.735682,0 z m 0,-2.34077 56.735682,0 c 1.542136,0 2.730893,-1.21661 2.730893,-2.75875 l 0,-56.73564 c 0,-1.54214 -1.188757,-2.73098 -2.730893,-2.73098 l -56.735682,0 c -1.542137,0 -2.758759,1.18884 -2.758759,2.73098 l 0,56.73564 c 0,1.54214 1.216622,2.75875 2.758759,2.75875 z"
+          />
+      <glyph
+         glyph-name="Dice 1"
+         id="glyph5057" />
+    </font>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="6.407514"
+     inkscape:cx="94.737137"
+     inkscape:cy="36.835582"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:snap-global="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1137"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       orientation="0,1"
+       position="38.392425,75.068115"
+       id="guide4141" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="34.334689,0"
+       id="guide4143" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="0,23.097882"
+       id="guide4145" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="75.068115,48.536765"
+       id="guide4147" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="14.98241,54.311235"
+       id="guide4149" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="59.929639,55.247636"
+       id="guide4151" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="46.82003,59.929639"
+       id="guide4153" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="44.635095,14.98241"
+       id="guide4155" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="37.456024,38.704558"
+       id="guide4157" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="53.218768,37.456024"
+       id="guide4159" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4105">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-977.36218)">
+    <path
+       id="path4161-1-0"
+       transform="matrix(1.1214283,0,0,1.1214283,18.025754,950.25932)"
+       style="fill:#000000;stroke:none"
+       d="m 42.643924,37.543976 c 0,2.865198 -2.322702,5.187899 -5.1879,5.187899 -2.865198,0 -5.187899,-2.322701 -5.187899,-5.187899 0,-2.865198 2.322701,-5.1879 5.187899,-5.1879 2.865198,0 5.1879,2.322702 5.1879,5.1879 z M 2.4897742,77.671356 c 0,2.865198 -2.32270205,5.187899 -5.1879,5.187899 -2.865198,0 -5.187899,-2.322701 -5.187899,-5.187899 0,-2.865198 2.322701,-5.1879 5.187899,-5.1879 2.86519795,0 5.1879,2.322702 5.1879,5.1879 z M -11.002267,24.123861 c -2.805788,0 -5.099524,2.293735 -5.099524,5.099523 l 0,56.735638 c 0,2.805797 2.293736,5.099568 5.099524,5.099568 l 56.735682,0 c 2.805788,0 5.099524,-2.293771 5.099524,-5.099568 l 0,-56.735638 c 0,-2.805788 -2.293736,-5.099523 -5.099524,-5.099523 l -56.735682,0 z m 0,2.340765 56.735682,0 c 1.542136,0 2.730893,1.216618 2.730893,2.758758 l 0,56.735638 c 0,1.542141 -1.188757,2.730982 -2.730893,2.730982 l -56.735682,0 c -1.542137,0 -2.758759,-1.188841 -2.758759,-2.730982 l 0,-56.735638 c 0,-1.54214 1.216622,-2.758758 2.758759,-2.758758 z" />
+  </g>
+</svg>
