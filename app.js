@@ -3,15 +3,14 @@ var express = require('express.io'),
     Game = require('./lib/game');
 
 var app = express();
+app.http().io();
 
-//app.http.io();
-
-/*app.io.route('ready', function(req) {
+app.io.route('ready', function(req) {
     req.io.join(req.data)
     req.io.room(req.data).broadcast('announce', {
         message: 'New client in the ' + req.data + ' room. '
     })
-})*/
+})
 
 var games = {};
 

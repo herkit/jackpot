@@ -1,12 +1,13 @@
 <h1>Game</h1>
 <div class="container" ng-app="jackpotApp">
+  GameId: <input type="text" ng-model="gameid" value="{{id}}" />
   <div ng-controller="jackpotGameCtrl">
     <div class="row">
-      <div class="col-xs-1 btn btn-large" ng-repeat="i in digits track by $index" ng-class="{ 'btn-success': nan(i), 'btn-default': ian(i) }" style="height: 3em; font-size: 300%" ng-click="select(i)">{[{i}]}</div>
+      <div class="col-xs-1 btn btn-large" ng-repeat="i in state.digits track by $index" ng-class="{ 'btn-success': nan(i), 'btn-default': ian(i) }" style="height: 3em; font-size: 300%" ng-click="select(i)">{[{i}]}</div>
     </div>
     <div class="row">
       <div class="col-xs-offset-3 col-xs-3 btn btn-large btn-default" ng-click="roll()">
-        <div class="col-xs-6 col dice" ng-repeat="d in dice track by $index">{[{d}]}</div>
+        <div class="col-xs-6 col dice" ng-repeat="d in state.dice track by $index">{[{d}]}</div>
       </div>
     </div>
   </div>
