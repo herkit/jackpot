@@ -1,5 +1,6 @@
 var jackpotApp = angular.module('jackpotApp', []);
 
+
 jackpotApp.config(function ($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
@@ -9,6 +10,11 @@ jackpotApp.controller('jackpotGameCtrl', function ($scope) {
   letters = ["-", "J", "A", "C", "K", "P", "O", "T", "-"];
   $scope.digits = [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
   $scope.dice = [1, 6];
+  $scope.buttonsuccess = function(i) {
+    return angular.isNumeric(i) ? false : true;
+  };
+  $scope.ian = function (i) { console.log("ian " + i); return !isNaN(parseFloat(i)) && isFinite(i); };
+  $scope.nan = function (i) { console.log("nan " + i); return isNaN(parseFloat(i)); };
   $scope.select = function(i) {
     var idx = $scope.digits.indexOf(i);
     if (idx >= 0) {

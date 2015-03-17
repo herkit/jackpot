@@ -2,7 +2,7 @@
 <div class="container" ng-app="jackpotApp">
   <div ng-controller="jackpotGameCtrl">
     <div class="row">
-      <div class="col-xs-1 btn btn-large btn-default" ng-repeat="i in digits track by $index" style="height: 3em; font-size: 300%" ng-click="select(i)">{[{i}]}</div>
+      <div class="col-xs-1 btn btn-large" ng-repeat="i in digits track by $index" ng-class="{ 'btn-success': nan(i), 'btn-default': ian(i) }" style="height: 3em; font-size: 300%" ng-click="select(i)">{[{i}]}</div>
     </div>
     <div class="row">
       <div class="col-xs-offset-3 col-xs-3 btn btn-large btn-default" ng-click="roll()">
