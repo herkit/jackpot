@@ -5,12 +5,25 @@ var express = require('express.io'),
 var app = express();
 app.http().io();
 
-app.io.route('ready', function(req) {
+// Setup your sessions, just like normal.
+app.use(express.cookieParser())
+app.use(express.session({secret: 'monkey'}))
+
+app
+  .io
+  .route('ready', function(req) {
     req.io.join(req.data)
     req.io.room(req.data).broadcast('announce', {
         message: 'New client in the ' + req.data + ' room. '
     })
-})
+  });
+app.io
+  .route('join', function(req) {
+
+  });
+
+
+
 
 var games = {};
 
