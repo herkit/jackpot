@@ -1,7 +1,9 @@
 <h1>Game</h1>
 <div class="container" ng-app="jackpotApp">
-  GameId: <input type="text" ng-model="gameid" value="{{id}}" />
+
   <div ng-controller="jackpotGameCtrl">
+    GameId: <input type="text" ng-model="gameid" value="{{id}}" />
+    <a class="btn btn-large btn-success" ng-click="join()">Join</a>
     <div class="row">
       <div class="col-xs-1 btn btn-large" ng-repeat="i in state.digits track by $index" ng-class="{ 'btn-success': nan(i), 'btn-default': ian(i) }" style="height: 3em; font-size: 300%" ng-click="select(i)">{[{i}]}</div>
     </div>
