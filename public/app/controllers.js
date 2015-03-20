@@ -3,10 +3,21 @@ var jackpotApp = angular.module('jackpotApp', [
   'btford.socket-io'
 ])
 
-jackpotApp.config(function ($interpolateProvider) {
+/*jackpotApp.config(function ($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
-});
+});*/
+
+jackpotApp.controller('GameListCtrl', ['$scope', '$http', 'socket', function ($scope, $http, socket) {
+  $scope.games = [];
+  $http.get("/game").success(function(data) {
+    $scope.games = data;
+  });
+
+  socket.on("gamelist:update", function(data) {
+    $scope.games = data;
+  });
+}]);
 
 jackpotApp.controller('jackpotGameCtrl', ['$scope', 'socket', function ($scope, socket) {
   letters = ["-", "J", "A", "C", "K", "P", "O", "T", "-"];
@@ -25,6 +36,12 @@ jackpotApp.controller('jackpotGameCtrl', ['$scope', 'socket', function ($scope, 
     $scope.state = data;
   });
 
+  socket.on("roll", function(data) {
+    console.log("socket.io:roll " + data);
+    $scope.state = data;
+  });
+
+
   $scope.gameid = "asdf";
   $scope.myname = "";
   $scope.join = function() {
@@ -36,11 +53,10 @@ jackpotApp.controller('jackpotGameCtrl', ['$scope', 'socket', function ($scope, 
   $scope.ian = function (i) { return !isNaN(parseFloat(i)) && isFinite(i); };
   $scope.nan = function (i) { return isNaN(parseFloat(i)); };
   $scope.select = function(i) {
-    $socket.emit("select", { gameid: $scope.gameid, digit: i });
+    socket.emit("select", { gameid: $scope.gameid, digit: i });
   };
   $scope.roll = function() {
-    console.log($scope);
-    $socket.emit("roll", { gameid: $scope.gameid });
+    socket.emit("roll", { gameid: $scope.gameid });
     /*var rolls = [];
     for(i in $scope.state.dice) {
       rolls.push(Math.floor(Math.random() * 20) + 1);

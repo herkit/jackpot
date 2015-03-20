@@ -1,5 +1,4 @@
 var express = require('express.io'),
-    exphbs  = require('express-handlebars'),
     Game = require('./lib/game'),
     merge = require('merge');
 
@@ -31,40 +30,47 @@ app.io
         req.io.room(state.id).broadcast("error", err);
       else {
         console.log("socket-id: join " + state.id);
-        req.io.broadcast("gamestate", state);
+        app.io.broadcast("gamestate", state);
       }
     });
   });
 app.io
-  .route('observe', function(req) {
-    //req.io.join(req.data.gameid);
+  .route('ready', function(req) {
+    req.io.join(req.data.gameid);
   });  
 app.io
   .route('roll', function(req) {
     console.log("socket-io: roll(" + req.data.gameid + ")");
     var game = getGame(req.data.gameid);
     if (game.state.currentplayer.id === req.session.id)
-      game.rollDice(emitState(req));
+      game.rollDice(emitState('roll'));
     else {
-      req.io.broadcast("error", { message: "It is not your turn" });
+      app.io.broadcast("error", { message: "It is " + game.state.currentplayer.name + "'s turn" });
     }
   });
 app.io
   .route('select', function(req) {
     var game = getGame(req.data.gameid);
     if (game.state.currentplayer.id === req.session.id)
-      game.select(req.data.digit, emitState(req));
+      game.select(req.data.digit, emitState('select'));
     else
-      req.io.broadcast("error", { message: "It is not your turn" });
+      app.io.room(game.state.id).broadcast("error", { message: "It is " + game.state.currentplayer.name + "'s turn" });
   });  
-
-
 
 var games = {};
 
 var getGame = function(gameId) {
   if (!games[gameId]) {
     games[gameId] = new Game(gameId);
+    games[gameId].on("statechange", function(state) {
+      console.log("statechange:" + state);
+    }).on("error", function(err) {
+      console.log("error:" + err);
+    }).on("newplayer", function() {
+      console.log("newplayer");
+      app.io.broadcast("gamelist:update", getGameList());
+    })
+    app.io.broadcast("gamelist:update", getGameList());
   }
   return games[gameId];
 }
@@ -89,14 +95,14 @@ var outputState = function(req, res) {
   }
 };
 
-var emitState = function(req) {
+var emitState = function(method) {
   console.log("prepare emitState, " + req);
   return function(err, state) {
     console.log("emitState");
     if (err) {
-      req.io.room(state.id).broadcast("error", err);
+      app.io.room(state.id).broadcast("error", err);
     } else {
-      req.io.room(state.id).broadcast("gamestate", state);
+      app.io.room(state.id).broadcast(method || "gamestate", state);
     }
   }
 };
@@ -104,7 +110,6 @@ var emitState = function(req) {
 
 app.set('port', (process.env.PORT || 3000))
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.use(express.static(__dirname + '/public'));
@@ -116,10 +121,6 @@ app.get('/', function (req, res) {
 
 app.get("/game", function(req, res) {
   res.json(getGameList());
-});
-
-app.get("/game/:game", function(req, res) {
-  res.render('game', getGame(req.params.game).state);
 });
 
 app.get("/game/:game/state", function(req, res) {
@@ -134,10 +135,10 @@ app.get("/game/:game/roll", function(req, res) {
     res.json({ message: "It is not your turn" }, 403);
 });
 
-app.get("/game/:game/select/:number", function(req, res) {
+app.get("/game/:game/select", function(req, res) {
   var game = getGame(req.params.game);
   if (game.state.currentplayer.id === req.session.id)
-    game.select(parseInt(req.params.number), outputState(req, res));
+    game.select(parseInt(req.query.digit), outputState(req, res));
   else
     res.json({ message: "It is not your turn" }, 403);
 });
