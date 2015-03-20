@@ -10,12 +10,6 @@ app.use(express.cookieParser())
 app.use(express.session({secret: 'jackpot'}))
 
 app.io
-  .route('ready', function(req) {
-
-  });
-
-
-app.io
   .route('join', function(req) {
     console.log("socket-io: join(" + req.data.gameid + ")");
     var game = getGame(req.data.gameid);
@@ -37,7 +31,12 @@ app.io
 app.io
   .route('ready', function(req) {
     req.io.join(req.data.gameid);
-  });  
+  }); 
+app.io
+  .route('next', function(req) {
+    var game = getGame(req.data.gameid);
+    game.nextPlayer();    
+  });
 app.io
   .route('roll', function(req) {
     console.log("socket-io: roll(" + req.data.gameid + ")");
@@ -62,11 +61,17 @@ var games = {};
 var getGame = function(gameId) {
   if (!games[gameId]) {
     games[gameId] = new Game(gameId);
-    games[gameId].on("statechange", function(state) {
-      console.log("statechange:" + state);
-    }).on("error", function(err) {
+    games[gameId]
+    .on("statechange", function(state) {
+      app.io.room(state.id).broadcast("gamestate", state);
+    })
+    .on("roll", function(state) {
+      app.io.room(state.id).broadcast("roll", state);
+    })
+    .on("error", function(err) {
       console.log("error:" + err);
-    }).on("newplayer", function() {
+    })
+    .on("newplayer", function() {
       console.log("newplayer");
       app.io.broadcast("gamelist:update", getGameList());
     })
@@ -96,7 +101,6 @@ var outputState = function(req, res) {
 };
 
 var emitState = function(method) {
-  console.log("prepare emitState, " + req);
   return function(err, state) {
     console.log("emitState");
     if (err) {

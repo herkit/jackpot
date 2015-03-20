@@ -1,12 +1,36 @@
 var jackpotApp = angular.module('jackpotApp', [
+  'ngRoute',
   'jackpotApp.services',
   'btford.socket-io'
 ])
+
+jackpotApp.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/games/:gameId', {
+        templateUrl: 'partials/game.html',
+        controller: 'jackpotGameCtrl'
+      }).
+      when('/welcome', {
+        templateUrl: 'partials/welcome.html',
+        controller: 'WelcomeCtrl'
+      }).
+      otherwise({
+        redirectTo: '/welcome'
+      });
+  }]);
 
 /*jackpotApp.config(function ($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
 });*/
+
+jackpotApp.controller('WelcomeCtrl', ['$scope', '$location', function($scope, $location) {
+  $scope.newGame = function() {
+    console.log("newGame");
+    $location.path("/games/asdfaet2345");
+  }
+}]);
 
 jackpotApp.controller('GameListCtrl', ['$scope', '$http', 'socket', function ($scope, $http, socket) {
   $scope.games = [];
@@ -19,33 +43,57 @@ jackpotApp.controller('GameListCtrl', ['$scope', '$http', 'socket', function ($s
   });
 }]);
 
-jackpotApp.controller('jackpotGameCtrl', ['$scope', 'socket', function ($scope, socket) {
+jackpotApp.controller('jackpotGameCtrl', ['$scope', 'socket', '$routeParams', '$http', function ($scope, socket, $routeParams, $http) {
   letters = ["-", "J", "A", "C", "K", "P", "O", "T", "-"];
 
-  /*$http.get("./state").
-  success(function(data, status, headers, config) {
-    $scope.state = data;
-  });*/
 
   $scope.state = {};
   $scope.state.digits = [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
-  $scope.state.dice = [1, 6];
+  $scope.dice = [1, 6];
 
   socket.on("gamestate", function(data) {
-    console.log(data);
     $scope.state = data;
+    $scope.dice = $scope.state.dice;
+    $scope.error = "";
   });
+
+  animateRoll = function(rolls, callback) {
+    if (rolls > 0)
+    {
+      for(i in $scope.dice) {
+        $scope.dice[i] = Math.floor(Math.random() * 6) + 1;
+      }
+      setTimeout(20, function() { animateRoll(rolls--, callback); });
+    } else {
+      callback();
+    }
+  }
 
   socket.on("roll", function(data) {
-    console.log("socket.io:roll " + data);
     $scope.state = data;
+    $scope.dice = $scope.state.dice;
+  });
+
+  socket.on("error", function(error) {
+    $scope.error = error.message;
+    setTimeout(1500, function() { $scope.error = ""; });
   });
 
 
-  $scope.gameid = "asdf";
+  $scope.gameid = $routeParams.gameId;
+  $http.get("/game/" + $scope.gameid + "/state")
+    .success(function(data, status, headers, config) {
+      $scope.state = data;
+    });
+  socket.emit("ready", { gameid: $scope.gameid });
+
   $scope.myname = "";
   $scope.join = function() {
     socket.emit("join", { gameid: $scope.gameid });
+  };
+  $scope.start = function() {
+    console.log("start");
+    socket.emit("next", { gameid: $scope.gameid });
   };
   $scope.buttonsuccess = function(i) {
     return angular.isNumeric(i) ? false : true;
