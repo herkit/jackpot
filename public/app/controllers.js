@@ -20,6 +20,12 @@ jackpotApp.config(['$routeProvider',
       });
   }]);
 
+jackpotApp.filter("nextButtonTitle", function() { return function (state) {
+  if (state === "finish") return "Next";
+  if (state === "registering") return "Start";
+  return "";
+}});
+
 /*jackpotApp.config(function ($interpolateProvider) {
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
@@ -79,6 +85,10 @@ jackpotApp.controller('jackpotGameCtrl', ['$scope', 'socket', '$routeParams', '$
     setTimeout(1500, function() { $scope.error = ""; });
   });
 
+  socket.on("you", function(data) {
+    console.log("you");
+    $scope.me = data.you;
+  });
 
   $scope.gameid = $routeParams.gameId;
   $http.get("/game/" + $scope.gameid + "/state")
@@ -112,4 +122,7 @@ jackpotApp.controller('jackpotGameCtrl', ['$scope', 'socket', '$routeParams', '$
 
     }*/
   };
+  $scope.showNext = function() {
+    return (($scope.state.mode === 'registering' && $scope.state.players.length > 0) || $scope.state.mode === 'finish');
+  }
 }]);

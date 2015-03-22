@@ -15,22 +15,21 @@ app.io
     var game = getGame(req.data.gameid);
 
     var joinMessage = { name: req.data.name || "Player " + (game.state.players.length + 1), id: req.session.id };
-    console.log(joinMessage);
-
     game.addPlayer(joinMessage, function(err, state) {
-      console.log(err);
-      console.log(state);
       if (err)
         req.io.room(state.id).broadcast("error", err);
       else {
         console.log("socket-id: join " + state.id);
         app.io.broadcast("gamestate", state);
+        console.log("socket-io: emit you " + JSON.stringify({ you: req.session.id }));
+        req.io.emit("you", { you: req.session.id });
       }
     });
   });
 app.io
   .route('ready', function(req) {
     req.io.join(req.data.gameid);
+    req.io.emit("you", { you: req.session.id });
   }); 
 app.io
   .route('next', function(req) {
@@ -154,6 +153,11 @@ app.get("/game/:game/join", function(req, res) {
 
 app.get("/game/:game/next", function(req, res) {
   getGame(req.params.game).nextPlayer(outputState(req, res));
+});
+
+app.get("/game/newid", function(req, res) {
+  var characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 });
 
 app.listen(app.get('port'), function() {

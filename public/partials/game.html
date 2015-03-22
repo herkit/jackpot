@@ -1,7 +1,6 @@
 <div ng-controller="jackpotGameCtrl">
   <div class="row">
     <h2>GameId {{gameid}}</h2>
-    <a class="btn btn-large btn-success" ng-click="join()">Join</a>
   </div>
   <div class="row">
     <div class="col-xs-1 btn btn-large" ng-repeat="i in state.digits track by $index" ng-class="{ 'btn-success': nan(i), 'btn-default': ian(i) }" style="height: 3em; font-size: 300%" ng-click="select(i)">{{i}}</div>
@@ -22,11 +21,15 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-offset-3 col-xs-3 btn btn-large btn-default" ng-click="roll()">
+    <div class="col-xs-3">
+      <a class="btn btn-large btn-success" style="font-size: 3em" ng-click="join()">Join</a>
+    </diV>
+    <div class="col-xs-3" ng-click="roll()">
       <div class="col-xs-6 col dice" ng-repeat="d in dice track by $index">{{d}}</div>
     </div>
+    <div>
+      <a class="btn btn-large btn-default" style="font-size: 3em" ng-show="showNext()" ng-click="start()">{{state.mode | nextButtonTitle}}</a>
+    </div>
   </div>
-  {{state.mode}} - <a class="btn btn-large btn-succes" ng-click="start()">Start</a>
-
   <h2>{{error}}</h2>
 </div>
