@@ -1,21 +1,26 @@
 <div ng-controller="jackpotGameCtrl">
   <div class="row">
-    <h2>GameId {{gameid}}</h2>
+    <h2>Game {{gameid}}</h2>
+    <h3>Current player: {{state.currentplayer.name}} <span ng-show="me === state.currentplayer.id">(you)</span></h3>
   </div>
   <div class="row">
     <div class="col-xs-1 btn btn-large" ng-repeat="i in state.digits track by $index" ng-class="{ 'btn-success': nan(i), 'btn-default': ian(i) }" style="height: 3em; font-size: 300%" ng-click="select(i)">{{i}}</div>
     <div class="col-xs-3">
-      <table>
+      <table class="table table-striped">
+        <thead>
         <tr>
           <th>Player</th>
           <th>Win</th>
           <th>Loss</th>
         </tr>
+        </thead>
+        <tbody>
         <tr ng-repeat="player in state.players">
           <td>{{player.name}}</td>
-          <td>{{player.win}}</td>
-          <td>{{player.loss}}</td>
+          <td align="right">{{player.win}}</td>
+          <td align="right">{{player.loss}}</td>
         </tr>
+        </tbody>
       </table>
     </div>
   </div>

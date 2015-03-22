@@ -99,7 +99,7 @@ jackpotApp.controller('jackpotGameCtrl', ['$scope', 'socket', '$routeParams', '$
 
   $scope.myname = "";
   $scope.join = function() {
-    socket.emit("join", { gameid: $scope.gameid });
+    socket.emit("join", { gameid: $scope.gameid, name: prompt("What is your name?") });
   };
   $scope.start = function() {
     console.log("start");
